@@ -99,4 +99,70 @@ public class JobServicio {
             }
         }
     }
-}
+
+    // CONSULTA LOS ultimos 20 REGISTROS de la bitacora!
+    public void consultarHistorial() throws SQLException
+    {
+
+        String sql = """
+                SELECT log_id, fecha_ejecucion, registros_procesados, mensaje
+                FROM job_log
+                ORDER BY log_id DESC
+                FETCH FIRST 20 ROWS ONLY
+                """;
+
+        try (Connection cn = ConexionOracle.conectar();
+             PreparedStatement st = cn.prepareStatement(sql);
+             ResultSet rs = st.executeQuery())
+        {
+            System.out.println("\n--- HISTORIAL DE PROCESAMIENTO ---");
+
+            boolean hayDatos = false;
+
+            while (rs.next()) {
+                hayDatos = true;
+
+                System.out.printf(
+                        "ID: %d | Fecha: %s | Procesados: %d | Mensaje: %s%n",
+                        rs.getLong("log_id"),
+                        rs.getTimestamp("fecha_ejecucion"),
+                        rs.getInt("registros_procesados"),
+                        rs.getString("mensaje")
+                );
+            }
+
+            if (!hayDatos)
+            {
+                System.out.println("Todavía no hay ejecuciones registradas.");
+            }
+        }
+    }
+
+    // CONSULTA LAS solicitudes registradas!
+    public void consultarSolicitudes() throws SQLException
+    {
+
+        String sql = """
+                SELECT id, descripcion, estado, fecha_proceso
+                FROM job_solicitudes
+                ORDER BY id
+                """;
+
+        try (Connection cn = ConexionOracle.conectar();
+             PreparedStatement st = cn.prepareStatement(sql);
+             ResultSet rs = st.executeQuery())
+        {
+            System.out.println("\n--- SOLICITUDES ---");
+
+            while (rs.next()) {
+                System.out.printf(
+                        "%d | %-35s | %-12s | %s%n",
+                        rs.getLong("id"),
+                        rs.getString("descripcion"),
+                        rs.getString("estado"),
+                        rs.getTimestamp("fecha_proceso")
+                );
+            }
+        }
+    }
+}   
