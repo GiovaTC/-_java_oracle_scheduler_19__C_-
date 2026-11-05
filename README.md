@@ -3,6 +3,8 @@ Java Oracle Scheduler 19c — Proyecto completo:
 
 <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/99613687-6a26-4f5e-b518-6ece6761961f" />  
 
+<img width="2558" height="1078" alt="image" src="https://github.com/user-attachments/assets/e53d964a-89f2-47e9-b773-0cff7195c48a" />     
+
 ```
 
 Aplicación de consola desarrollada con Java 21, IntelliJ IDEA, Maven, JDBC y Oracle Database 19c. Permite consultar,
